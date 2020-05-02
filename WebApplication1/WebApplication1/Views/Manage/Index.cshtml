@@ -1,0 +1,46 @@
+﻿@model WebApplication1.Models.IndexViewModel
+@{
+    ViewBag.Title = "Zarządzaj systemem";
+}
+
+<h2>@ViewBag.Title</h2><br />
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>Zmień ustawienia konta</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Hasło:</dt>
+        <dd>
+            @Html.ActionLink("Zmień hasło", "ChangePassword")
+        </dd>
+    </dl>
+    <hr />
+    <h4>Zarządzaj systemem</h4>
+    <dl class="dl-horizontal">
+        <dt>Osoby zaginione:</dt>
+        <dd>
+            @Html.ActionLink("Dodaj osobę", "Create", "Person")
+        </dd>
+        <dd>
+            @if (User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Zarządzaj osobami", "ManageLostPersons")
+            }
+        </dd>
+    </dl>
+    @if (User.IsInRole("Admin"))
+    {
+        <hr />
+        <h4>Zarządzaj użytkownikami</h4>
+        <dl class="dl-horizontal">
+            <dt>Konta użytkowników:</dt>
+            <dd>
+                @Html.ActionLink("Zarządzaj kontami", "ManageUsers")
+            </dd>
+            <dd>
+                @Html.ActionLink("Dodaj konto", "AddUser")
+            </dd>
+        </dl>
+    }
+</div>

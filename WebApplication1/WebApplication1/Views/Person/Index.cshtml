@@ -1,0 +1,65 @@
+﻿@model IEnumerable<WebApplication1.Models.PersonModel>
+@using WebApplication1.Models
+@{
+    ViewBag.Title = "Lista osób zaginionych";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lista osób zaginionych</h2>
+
+@using (Html.BeginForm())
+{
+    <p>
+        @Html.DropDownList("SelectedGender",
+                             new SelectList(Enum.GetValues(typeof(Gender))),
+                             "Select Gender",
+                             new { @class = "form-control", style = "display:inline-block" })
+        <input type="submit" value="Search" class="btn btn-secondary" />
+    </p>
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("First Name", "Index", new { sortOrder = ViewBag.FirstNameSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.LastNameSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Gender", "Index", new { sortOrder = ViewBag.GenderSortParm })
+        </th>
+        <th style = "max-width:200px">
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td style = "max-width:200px">
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.PersonID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+
